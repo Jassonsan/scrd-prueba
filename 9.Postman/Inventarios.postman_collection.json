@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "3530d1d3-1e3e-42f5-87f0-5b252c03c2de",
+		"name": "Inventarios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET-Areas por empresa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/area/empresa?id=c919b68e-5e18-11ec-bf63-0242ac130002",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"area",
+						"empresa"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "c919b68e-5e18-11ec-bf63-0242ac130002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET-Personas por empresa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/persona/empresa?id=c919b68e-5e18-11ec-bf63-0242ac130002",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"persona",
+						"empresa"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "c919b68e-5e18-11ec-bf63-0242ac130002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET-Empresa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8000/api/empresa"
+			},
+			"response": []
+		},
+		{
+			"name": "POST-inventario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"nombre\":\"Inventario 1 empresa 1\",\n\"descripcion\": \"primer inventario\",\n\"tipo\":\"dato 1\",\n\"valor_compra\": 8852224,\n\"estado\":\"inactivo\",\n\"serial\": \"1asdasdsad\",\n\"id_persona\": \"045813d0-5e19-11ec-bf63-0242ac130002\",\n\"id_empresa\": \"c919b68e-5e18-11ec-bf63-0242ac130002\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/inventario"
+			},
+			"response": []
+		},
+		{
+			"name": "GET- Inventarios por empresa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/inventario/empresa?id=c919b68e-5e18-11ec-bf63-0242ac130002",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"inventario",
+						"empresa"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "c919b68e-5e18-11ec-bf63-0242ac130002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT - Inventario",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"fadc92b0-c2b5-4a4e-865c-0dc0284f552f\",\n    \"nombre\": \"Inventario1 empresa 1\",\n    \"descripcion\": \"primer inventario\",\n    \"tipo\": \"dato 11\",\n    \"serial\": \"serial 1\",\n    \"valor_compra\": 998899.54,\n    \"fecha_compra\": null,\n    \"estado\": \"inactivo\",\n    \"id_area\": null,\n    \"id_persona\": \"045813d0-5e19-11ec-bf63-0242ac130002\",\n    \"id_empresa\": \"c919b68e-5e18-11ec-bf63-0242ac130002\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/inventario/cda3a394-e898-4a0e-b0cf-273361abeca7"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - Inventario",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8000/api/inventario/17fa43ef-1f68-4aa8-a81d-f968dd64f97e"
+			},
+			"response": []
+		}
+	]
+}

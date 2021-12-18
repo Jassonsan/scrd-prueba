@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+
+  postgres-db:
+    build: ./database
+    restart: always
+    volumes:
+      - ./database/init/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+
+  django-enpoints:
+    build: ./1.Api
+    restart: always
+    depends_on:
+      - postgres-db
+    ports:
+      - 8000:8000
+  
+  frontend:
+    build: ./4.cliente
+    depends_on:
+      - django-endpoints
+    ports:
+      - 4200:80
+
+  

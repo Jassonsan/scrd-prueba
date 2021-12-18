@@ -1,0 +1,167 @@
+<div class="container mt-3">
+    <div class="d-flex justify-content-center">
+        <h1>Prueba inventarios</h1>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group mb-3 mt-3">
+                <label for="tipo-select">Seleccione la empresa</label>
+                <select class="form-control" id="tipo-select" [(ngModel)]="selectedOrganization"
+                    (ngModelChange)="changeOrganization()">
+                    <option value="" selected>-Seleccione-</option>
+                    <option *ngFor="let org of organizations" [value]="org.id">{{org.nombre}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center" *ngIf="selectedOrganization">
+        <button class="btn btn-primary btn-lg" (click)="openModal()">Crear inventario</button>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <table class="table table-striped table-bordered" *ngIf="inventories && inventories.length >0">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of inventories">
+                        <td>{{item.nombre}}</td>
+                        <td>{{item.tipo}}</td>
+                        <td>{{item.valor_compra}}</td>
+                        <td>{{item.estado}}</td>
+                        <td>
+                    <button (click)="delete(item.id)"><i class="fas fa-trash-alt"></i></button>
+                    <button (click)="edit(item)"><i class="fas fa-edit ml-1"></i></button>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{this.editing ? 'Editar inventario' : 'Crear inventario'}} (los campos son
+                    obligatorios) </h5>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form [formGroup]="inventoryForm">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-group mb-3 mt-3">
+                                    <label for="name-input">Nombre</label>
+                                    <input id="name-input" class="form-control" aria-label="name-input"
+                                        formControlName="nombre" aria-describedby="basic-addon1" maxlength="250">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-group mb-3 mt-3">
+                                    <label for="descripcion-input">Descripción</label>
+                                    <input id="descripcion-input" class="form-control" aria-label="descripcion-input"
+                                        formControlName="descripcion" aria-describedby="basic-addon1" maxlength="250">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-group mb-3 mt-3">
+                                    <label for="tipo-input">Tipo</label>
+                                    <input id="tipo-input" class="form-control" aria-label="tipo-input"
+                                        formControlName="tipo" aria-describedby="basic-addon1" maxlength="250">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3 mt-3">
+                                    <label for="serial-input">Serial</label>
+                                    <input id="serial-input" class="form-control" aria-label="serial-input"
+                                        formControlName="serial" aria-describedby="basic-addon1" maxlength="250">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3 mt-3">
+                                    <label for="valor-input">Valor compra</label>
+                                    <input id="valor-input" class="form-control" aria-label="valor-input"
+                                        formControlName="valor_compra" aria-describedby="basic-addon1" type="number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3 mt-3">
+                                    <label for="fecha_compra-input">Fecha compra</label>
+                                    <input id="fecha_compra-input" type="date" class="form-control"
+                                        aria-label="fecha_compra" formControlName="fecha_compra"
+                                        aria-describedby="basic-addon1" maxlength="30">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3 mt-3">
+                                    <label for="estado-input">Estado</label>
+                                    <input id="estado-input" class="form-control" aria-label="estado-input"
+                                        formControlName="estado" aria-describedby="basic-addon1" maxlength="250">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" formControlName="area" (change)="changeOption()">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">¿Asignado a un área?</label>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="selectedOption == 1">
+                            <div class="col-4">
+                                <div class="form-group mb-3 mt-3">
+                                    <label for="area-select">Seleccione el área</label>
+                                    <select class="form-control" id="area-select" formControlName="id_area">
+                                        <option *ngFor="let area of areas" [value]="area.id">{{area.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="selectedOption == 2">
+                            <div class="col-4">
+                                <div class="form-group mb-3 mt-3">
+                                    <label for="person-select">Seleccione la persona</label>
+                                    <select class="form-control" id="person-select" formControlName="id_persona">
+                                        <option *ngFor="let person of people" [value]="person.id">{{person.nombre}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" (click)="save()"
+                                    [disabled]="inventoryForm.invalid">Guardar</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
